@@ -1,8 +1,8 @@
+from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
 from .views import UsersViewSet, retrieve_token, sign_up
-from django.contrib import admin
 
 router = SimpleRouter()
 
