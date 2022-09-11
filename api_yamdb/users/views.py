@@ -48,22 +48,22 @@ def sign_up(request):
 @api_view(['POST'])
 def retrieve_token(request):
     serializer = UserSignUpSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        user = get_object_or_404(User, username=request.data.get('username'))
-        if check_token(user, request.data.get('confirmation_code')):
-            access = AccessToken.for_user(user)
-            return Response(
-                {
-                    'token': str(access)
-                },
-                status=status.HTTP_200_OK
-            )
+    serializer.is_valid(raise_exception=True)
+    user = get_object_or_404(User, username=request.data.get('username'))
+    if check_token(user, request.data.get('confirmation_code')):
+        access = AccessToken.for_user(user)
         return Response(
             {
-                'confirmation_code': 'Confirmation code is invalid'
+                'token': str(access)
             },
-            status=status.HTTP_400_BAD_REQUEST
+            status=status.HTTP_200_OK
         )
+    return Response(
+        {
+            'confirmation_code': 'Confirmation code is invalid'
+        },
+        status=status.HTTP_400_BAD_REQUEST
+    )
 
 
 class UsersViewSet(viewsets.ModelViewSet):
