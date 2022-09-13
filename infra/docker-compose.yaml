@@ -9,7 +9,7 @@ services:
       - ./.env
 
   web:
-    image: kolobaha/api_yamdb:latest
+    image: kolobaha/api_yamdb:v4
     restart: always
     volumes:
       - static_value:/app/static/
